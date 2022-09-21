@@ -8,13 +8,19 @@ services:
     restart: always
     volumes:
       - ./backend:/app-back
-    env_file:
-      - ./.env
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_HOST: db # Nome do service logo abaixo
+      PORT: '3001'
+      HOST: todo_list
     ports:
       - 3001:3001
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - todo_list_net
 
   db:
     image: mysql
@@ -28,5 +34,11 @@ services:
       - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 5s
+      timeout: 10s
       retries: 10
+    networks:
+      - todo_list_net
+
+networks:
+  todo_list_net:
+    driver: bridge
