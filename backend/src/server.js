@@ -1,3 +1,6 @@
 const app = require('./app');
+require('dotenv').config();
 
-app.listen(3001, () => console.log('server running on port 3001'));
+PORT = process.env.BACK_PORT || 3001;
+
+app.listen(PORT, () => console.log(`server running on port ${PORT}`));
