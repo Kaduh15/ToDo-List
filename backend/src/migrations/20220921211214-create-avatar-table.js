@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
@@ -86,6 +86,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 'yellow',
       },
+    },
+    {
+      tableName: 'avatars',
+      underscored: true,
     });
     
   },

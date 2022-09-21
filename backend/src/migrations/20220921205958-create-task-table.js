@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -23,16 +23,21 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
       },
-      desciption: {
+      description: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       status: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-    });
+    },
+    {
+      tableName: 'tasks',
+      underscored: true,
+    }
+    );
 
   },
 

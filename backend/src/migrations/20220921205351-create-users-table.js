@@ -23,7 +23,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       }
-    });
+    },
+    {
+      tableName: 'users',
+      underscored: true,
+    }
+    );
   },
 
   async down (queryInterface, Sequelize) {
