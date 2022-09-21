@@ -7,12 +7,11 @@ const UserSchema = (sequelize, DataTypes) => {
   {
     timestamps: false,
     tableName: 'users',
-    underscored: true,
   });
 
   UserTable.associate = (models) => {
     UserTable.hasMany(models.Task, {
-      foreignKey: 'id',
+      foreignKey: 'userId',
       as: 'tasks',
     })
   }
