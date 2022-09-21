@@ -13,7 +13,13 @@ module.exports = {
       user_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        unique: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "users",
+          key: "id"
+        },
+        onDelete: "CASCADE",
       },
       accessory: {
         type: Sequelize.STRING,
