@@ -12,7 +12,14 @@ const getById = async (id) => {
   return { type: 'ok', data: result };
 }
 
+const createUser = async (user) => {
+  const result = await userServeice.createUser(user);
+
+  return { type: 'created', data: result };
+}
+
 module.exports = {
   getAll,
   getById,
+  createUser,
 };

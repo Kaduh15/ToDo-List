@@ -5,6 +5,7 @@ const erros = {
   'unauthorized': 403,
   'not found': 404,
   'internal error': 500,
+  'any.required': 400,
 }
 
 const map = (erro) => erros[erro] || 500;

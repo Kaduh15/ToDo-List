@@ -33,7 +33,14 @@ const getById = async (id) => {
     throwError({message: 'User not found', status: 'not found'});
 }
 
+const createUser = async (user) => {
+  const result = await User.create(user);
+
+  return result;
+}
+
 module.exports = {
   getAll,
   getById,
+  createUser,
 }

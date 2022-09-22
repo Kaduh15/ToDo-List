@@ -2,7 +2,8 @@ const express = require('express');
 require('express-async-errors');
 
 const userRouter = require('./routes/userRouter')
-const errorMiddleware = require('./middlewares/errorMiddleware')
+const errorMiddleware = require('./middlewares/errorMiddleware');
+const userCreateValidation = require('./middlewares/userCreateValidation');
 
 const app = express();
 app.use(express.json());
