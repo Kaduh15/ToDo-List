@@ -1,20 +1,31 @@
 version: '3'
 
 services:
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    tty: true
+    stdin_open: true
+    restart: always
+    volumes:
+      - ./frontend:/app-front
+    env_file:
+      - ./.env
+    ports:
+      - 3000:3000
+    networks:
+      - todo_list_net
+  
   backend:
     build: ./backend
+    container_name: backend
     tty: true
     stdin_open: true
     restart: always
     volumes:
       - ./backend:/app-back
-    environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_HOST: db
-      MYSQL_DATABASE: todo_list
-      PORT: '3001'
-      HOST: todo_list
+    env_file:
+      - ./.env
     ports:
       - 3001:3001
     depends_on:
@@ -25,6 +36,7 @@ services:
 
   db:
     image: mysql
+    container_name: database
     platform: linux/x86_64
     restart: always
     volumes:
