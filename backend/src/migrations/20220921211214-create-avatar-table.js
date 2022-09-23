@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    await queryInterface.createTable('avatars', { 
+    await queryInterface.createTable('users_avatars', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -88,13 +88,13 @@ module.exports = {
       },
     },
     {
-      tableName: 'avatars',
+      tableName: 'users_avatars',
       underscored: true,
     });
     
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('avatars');
+    await queryInterface.dropTable('users_avatars');
   }
 };
