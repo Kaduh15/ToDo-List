@@ -27,7 +27,15 @@ const getById = async (id) => {
   return data;
 };
 
+const createTask = async (id, task) => {
+  const data = await Task.create({userId: id, ...task});
+  console.log("🚀 ~ file: taskService.js ~ line 32 ~ createTask ~ data", data)
+
+  return data;
+};
+
 module.exports = {
   getAll,
   getById,
+  createTask,
 }

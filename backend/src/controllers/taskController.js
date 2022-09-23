@@ -14,7 +14,14 @@ const getById = async (id) => {
   return { type: StatusCodes.OK, data };
 }
 
+const createTask = async (id, task) => {
+  const data = await taskService.createTask(id, task);
+
+  return { type: StatusCodes.CREATED, data };
+}
+
 module.exports = {
   getAll,
   getById,
+  createTask
 }

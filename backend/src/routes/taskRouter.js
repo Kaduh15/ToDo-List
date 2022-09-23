@@ -17,4 +17,11 @@ router.get('/:id', async (req, res) => {
   res.status(type).json(data);
 });
 
+router.post('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { type, data } = await taskController.createTask(id, req.body);
+
+  res.status(type).json(data);
+});
+
 module.exports = router;
