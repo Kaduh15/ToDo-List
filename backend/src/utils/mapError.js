@@ -7,9 +7,10 @@ const erros = {
   'internal error': 500,
   'any.required': 400,
   'object.unknown': 400,
+  'delete': 204,
 }
 
-const map = (e) => erros[`${e}`.toLowerCase()] || 500;
+const map = (e) => erros[String(e).toLowerCase()] || 500;
 
 const throwError = ({ message, status }) => {
   const e = new Error(message);

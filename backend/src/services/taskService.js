@@ -42,8 +42,17 @@ const createTask = async (id, task) => {
   return data;
 };
 
+const deleteTask = async (id) => {
+  const task = await Task.findByPk(id);
+
+  if (!task) return throwError({message: 'Task not found', status: ReasonPhrases.NOT_FOUND });
+
+  await Task.destroy({ where: { id }});
+}
+
 module.exports = {
   getAll,
   getById,
   createTask,
+  deleteTask,
 }
