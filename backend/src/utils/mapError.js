@@ -6,12 +6,12 @@ const erros = {
   'not found': 404,
   'internal error': 500,
   'any.required': 400,
+  'object.unknown': 400,
 }
 
-const map = (erro) => erros[erro] || 500;
+const map = (erro) => erros[erro.toLowerCase()] || 500;
 
 const throwError = ({ message, status }) => {
-  console.log("🚀 ~ file: mapError.js ~ line 13 ~ throwError ~ status", status)
   const e = new Error(message);
     e.status = status;
 

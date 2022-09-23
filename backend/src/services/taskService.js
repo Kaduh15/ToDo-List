@@ -1,4 +1,6 @@
+const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const { Task, User} = require('../models');
+const { throwError } = require('../utils/mapError');
 
 const getAll = async () => {
   const data = await Task.findAll({ include: [{
@@ -28,8 +30,11 @@ const getById = async (id) => {
 };
 
 const createTask = async (id, task) => {
+  const user = await User.findByPk(id);
+
+  if (!user) return throwError({message: 'Task not found', status: ReasonPhrases.NOT_FOUND });
+
   const data = await Task.create({userId: id, ...task});
-  console.log("🚀 ~ file: taskService.js ~ line 32 ~ createTask ~ data", data)
 
   return data;
 };

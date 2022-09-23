@@ -23,9 +23,12 @@ const getById = async (id) => {
       include: [{
         model: Task,
         as: 'tasks',
+        attributes: {
+          exclude: ['userId'],
+        }
       }],
       where: { id },
-      attributes: { exclude: ['password'] },
+      attributes: { exclude: ['password', 'id'] },
     });
 
     if (result) return result;

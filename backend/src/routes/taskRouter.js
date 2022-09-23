@@ -1,6 +1,7 @@
 const express = require('express');
 
-const taskController = require('../controllers/taskController')
+const taskController = require('../controllers/taskController');
+const taskCreateValidation = require('../middlewares/taskCreateValidation');
 
 const router = express.Router();
 
@@ -17,9 +18,9 @@ router.get('/:id', async (req, res) => {
   res.status(type).json(data);
 });
 
-router.post('/:id', async (req, res) => {
+router.post('/user/:id', taskCreateValidation, async (req, res) => {
   const { id } = req.params;
-  const { type, data } = await taskController.createTask(id, req.body);
+  const { type, data } = await taskController.createTask(Number(id), req.body);
 
   res.status(type).json(data);
 });
