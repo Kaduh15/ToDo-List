@@ -30,11 +30,16 @@ const getById = async (id) => {
 };
 
 const createTask = async (id, task) => {
+<<<<<<< HEAD
   const user = await User.findByPk(id);
 
   if (!user) return throwError({message: 'Task not found', status: ReasonPhrases.NOT_FOUND });
 
   const data = await Task.create({userId: id, ...task});
+=======
+  const data = await Task.create({userId: id, ...task});
+  console.log("🚀 ~ file: taskService.js ~ line 32 ~ createTask ~ data", data)
+>>>>>>> 61ac48139edfc35727a23141e566a104ba8f85bb
 
   return data;
 };
