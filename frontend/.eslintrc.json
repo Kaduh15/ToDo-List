@@ -17,6 +17,7 @@
         "react"
     ],
     "rules": {
-        "import/prefer-default": "off"
+        "import/prefer-default": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
 }
