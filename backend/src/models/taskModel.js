@@ -11,8 +11,8 @@ const TaskSchema = (sequelize, DataTypes) => {
   });
 
   TaskTable.associate = (models) => {
-    TaskTable.hasOne(models.User, {
-      foreignKey: 'id',
+    TaskTable.belongsTo(models.User, {
+      foreignKey: 'userId',
       as: 'user',
     })
   }

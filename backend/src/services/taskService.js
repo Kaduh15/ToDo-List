@@ -17,7 +17,6 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-  console.log("🚀 ~ file: taskService.js ~ line 20 ~ getById ~ id", id)
   const data = await Task.findOne({
     where: { id },
     include: [{
@@ -28,13 +27,15 @@ const getById = async (id) => {
     attributes: { exclude: ['userId']}}
   );
 
-  return data;
+  if (data) return data;
+
+  throwError({message: 'Task not found', status: ReasonPhrases.NOT_FOUND});
 };
 
 const createTask = async (id, task) => {
   const user = await User.findByPk(id);
 
-  if (!user) return throwError({message: 'Task not found', status: ReasonPhrases.NOT_FOUND });
+  if (!user) return throwError({message: 'User not found', status: ReasonPhrases.NOT_FOUND });
 
   const data = await Task.create({userId: id, ...task});
 
