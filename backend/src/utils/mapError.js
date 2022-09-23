@@ -9,7 +9,7 @@ const erros = {
   'object.unknown': 400,
 }
 
-const map = (erro) => erros[erro.toLowerCase()] || 500;
+const map = (e) => erros[`${e}`.toLowerCase()] || 500;
 
 const throwError = ({ message, status }) => {
   const e = new Error(message);
