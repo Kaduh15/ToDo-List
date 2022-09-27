@@ -1,7 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
 const taskService = require('../services/taskService');
-const { map } = require('../utils/mapError');
 
 const getAll = async (req, res) => {
   const data = await taskService.getAll(req.user.id);
