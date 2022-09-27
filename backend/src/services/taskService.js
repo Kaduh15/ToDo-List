@@ -37,7 +37,7 @@ const getById = async (id) => {
   throwError({message: 'Task not found', status: StatusCodes.NOT_FOUND});
 };
 
-const createTask = async (id, task) => {
+const create = async (id, task) => {
   const user = await User.findByPk(id);
 
   if (!user) return throwError({message: 'User not found', status: StatusCodes.NOT_FOUND });
@@ -58,6 +58,6 @@ const deleteTask = async (id) => {
 module.exports = {
   getAll,
   getById,
-  createTask,
+  create,
   deleteTask,
 }

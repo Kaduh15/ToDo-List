@@ -9,16 +9,18 @@ const getAll = async (req, res) => {
   res.status(StatusCodes.OK).json(data)
 }
 
-const getById = async (id) => {
+const getById = async (req, res) => {
   const data = await taskService.getById(id);
 
-  return { type: StatusCodes.OK, data };
+  res.status(StatusCodes.OK).json(data);
 }
 
-const createTask = async (id, task) => {
-  const data = await taskService.createTask(id, task);
+const create = async (req, res) => {
+  const { id } = req.user;
+  const task = req.body;
+  const data = await taskService.create(id, task);
 
-  return { type: StatusCodes.CREATED, data };
+  res.status(StatusCodes.CREATED).json(data)
 }
 
 const deleteTask = async (id) => {
@@ -30,6 +32,6 @@ const deleteTask = async (id) => {
 module.exports = {
   getAll,
   getById,
-  createTask,
+  create,
   deleteTask,
 }

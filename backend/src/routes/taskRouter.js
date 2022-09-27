@@ -24,12 +24,7 @@ router.get('/:id', async (req, res) => {
   res.status(type).json(data);
 });
 
-router.post('/user/:id', taskCreateValidation, async (req, res) => {
-  const { id } = req.params;
-  const { type } = await taskController.createTask(Number(id), req.body);
-
-  res.sendStatus(type);
-});
+router.post('/', taskCreateValidation, taskController.create);
 
 
 module.exports = router;
