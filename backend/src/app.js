@@ -3,6 +3,7 @@ require('express-async-errors');
 
 const userRouter = require('./routes/userRouter')
 const taskRouter = require('./routes/taskRouter')
+const loginRouter = require('./routes/loginRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const app = express();
@@ -13,6 +14,8 @@ app.get('/', (req, res) => res.status(200).json({ message: 'Olá Mundo!' }));
 app.use('/user', userRouter);
 
 app.use('/task', taskRouter)
+
+app.use('/login', loginRouter);
 
 app.use(errorMiddleware);
 
