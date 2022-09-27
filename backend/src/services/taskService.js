@@ -1,10 +1,9 @@
-const { StatusCodes, ReasonPhrases } = require('http-status-codes');
-const { Task, User} = require('../models');
+const { StatusCodes } = require('http-status-codes');
+const { Task, User } = require('../models');
 const { throwError } = require('../utils/mapError');
 
 const getAll = async (userId) => {
-  console.log("🚀 ~ file: taskService.js ~ line 6 ~ getAll ~ userId", userId)
-  const options = { 
+  const data = await Task.findAll({ 
     where: userId && { userId },
     include: [{
       model: User,
@@ -12,17 +11,14 @@ const getAll = async (userId) => {
       attributes: {
         exclude: ['password', 'email']
       },
-  }],
-  attributes: { exclude: ['userId'] }
-}
-  console.log("🚀 ~ file: taskService.js ~ line 17 ~ getAll ~ options", options)
-  const data = await Task.findAll(options);
+    }],
+    attributes: { exclude: ['userId'] }
+  });
 
   return data;
 }
 
 const getById = async (taskId, userId) => {
-  console.log("🚀 ~ file: taskService.js ~ line 25 ~ getById ~ taskId, userId", taskId, userId)
   const data = await Task.findOne({
     where: { id: taskId, userId },
     include: [{
@@ -48,12 +44,14 @@ const create = async (id, task) => {
   return data;
 };
 
-const deleteTask = async (id) => {
-  const task = await Task.findByPk(id);
+const deleteTask = async (taskId, userId) => {
+  const task = await Task.findOne({
+    where: { id: taskId, userId}
+  });
 
   if (!task) return throwError({message: 'Task not found', status: StatusCodes.NOT_FOUND });
 
-  await Task.destroy({ where: { id }});
+  await Task.destroy({ where: { id: taskId }});
 }
 
 module.exports = {

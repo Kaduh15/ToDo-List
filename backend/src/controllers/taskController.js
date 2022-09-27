@@ -25,10 +25,12 @@ const create = async (req, res) => {
   res.status(StatusCodes.CREATED).json(data)
 }
 
-const deleteTask = async (id) => {
-  await taskService.deleteTask(id);
+const deleteTask = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id: taskId } = req.params;
+  await taskService.deleteTask(taskId, userId);
 
-  return { type: map('delete') };
+  res.sendStatus(StatusCodes.NO_CONTENT);
 }
 
 module.exports = {

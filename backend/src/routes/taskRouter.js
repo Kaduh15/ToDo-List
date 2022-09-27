@@ -10,12 +10,7 @@ router.use(authAccess);
 
 router.get('/', taskController.getAll);
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { type, data } = await taskController.deleteTask(Number(id));
-
-  res.status(type).json(data);
-});
+router.delete('/:id', taskController.deleteTask);
 
 router.get('/:id', taskController.getById);
 
