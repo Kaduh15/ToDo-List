@@ -10,7 +10,9 @@ const getAll = async (req, res) => {
 }
 
 const getById = async (req, res) => {
-  const data = await taskService.getById(id);
+  const { id: userId } = req.user;
+  const { id: taskId } = req.params;
+  const data = await taskService.getById(taskId, userId);
 
   res.status(StatusCodes.OK).json(data);
 }

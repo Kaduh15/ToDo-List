@@ -21,9 +21,10 @@ const getAll = async (userId) => {
   return data;
 }
 
-const getById = async (id) => {
+const getById = async (taskId, userId) => {
+  console.log("🚀 ~ file: taskService.js ~ line 25 ~ getById ~ taskId, userId", taskId, userId)
   const data = await Task.findOne({
-    where: { id },
+    where: { id: taskId, userId },
     include: [{
       model: User,
       as: 'user',
