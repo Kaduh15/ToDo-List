@@ -1,11 +1,8 @@
 import React from 'react';
+import Rotas from './routes';
 
 function App() {
-  return (
-    <div className="App">
-      hello world
-    </div>
-  );
+  return <Rotas />;
 }
 
 export default App;
