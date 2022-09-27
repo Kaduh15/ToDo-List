@@ -2,8 +2,11 @@ const express = require('express');
 
 const taskController = require('../controllers/taskController');
 const taskCreateValidation = require('../middlewares/taskCreateValidation');
+const { authAccess } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
+
+router.use(authAccess);
 
 router.get('/',async (req, res) => {
   const { type, data } = await taskController.getAll();
