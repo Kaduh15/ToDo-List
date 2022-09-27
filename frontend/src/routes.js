@@ -7,7 +7,7 @@ export default function Rotas() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route path="page2" element={<h1>page2</h1>} />
       </Routes>
     </BrowserRouter>
