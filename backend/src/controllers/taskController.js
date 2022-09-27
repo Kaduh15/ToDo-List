@@ -1,35 +1,40 @@
 const { StatusCodes } = require('http-status-codes');
 
 const taskService = require('../services/taskService');
-const { map } = require('../utils/mapError');
 
-const getAll = async () => {
-  const data = await taskService.getAll();
+const getAll = async (req, res) => {
+  const data = await taskService.getAll(req.user.id);
 
-  return { type: StatusCodes.OK, data };
+  res.status(StatusCodes.OK).json(data)
 }
 
-const getById = async (id) => {
-  const data = await taskService.getById(id);
+const getById = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id: taskId } = req.params;
+  const data = await taskService.getById(taskId, userId);
 
-  return { type: StatusCodes.OK, data };
+  res.status(StatusCodes.OK).json(data);
 }
 
-const createTask = async (id, task) => {
-  const data = await taskService.createTask(id, task);
+const create = async (req, res) => {
+  const { id } = req.user;
+  const task = req.body;
+  const data = await taskService.create(id, task);
 
-  return { type: StatusCodes.CREATED, data };
+  res.status(StatusCodes.CREATED).json(data)
 }
 
-const deleteTask = async (id) => {
-  await taskService.deleteTask(id);
+const deleteTask = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id: taskId } = req.params;
+  await taskService.deleteTask(taskId, userId);
 
-  return { type: map('delete') };
+  res.sendStatus(StatusCodes.NO_CONTENT);
 }
 
 module.exports = {
   getAll,
   getById,
-  createTask,
+  create,
   deleteTask,
 }
