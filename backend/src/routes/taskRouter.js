@@ -8,11 +8,7 @@ const router = express.Router();
 
 router.use(authAccess);
 
-router.get('/',async (req, res) => {
-  const { type, data } = await taskController.getAll();
-
-  res.status(type).json(data);
-});
+router.get('/', taskController.getAll);
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;

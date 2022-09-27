@@ -3,10 +3,10 @@ const { StatusCodes } = require('http-status-codes');
 const taskService = require('../services/taskService');
 const { map } = require('../utils/mapError');
 
-const getAll = async () => {
-  const data = await taskService.getAll();
+const getAll = async (req, res) => {
+  const data = await taskService.getAll(req.user.id);
 
-  return { type: StatusCodes.OK, data };
+  res.status(StatusCodes.OK).json(data)
 }
 
 const getById = async (id) => {
