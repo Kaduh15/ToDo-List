@@ -4,7 +4,7 @@ const { authTokenValidation } = require('../utils/JWT');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
   const { authorization } = req.headers;
 
   if (!authorization) return res.status(StatusCodes.BAD_REQUEST).json({
