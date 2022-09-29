@@ -1,5 +1,7 @@
 import React from 'react';
 
+console.log(process.env);
+
 function App() {
   return (
     <h1 className="App">
