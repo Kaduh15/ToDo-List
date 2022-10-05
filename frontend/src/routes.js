@@ -8,7 +8,7 @@ import Login from './pages/login';
 import { isAuth } from './utils/axios';
 
 function PrivateRoute({ children }) {
-  const [token] = useStorage('ACESS_TOKEN');
+  const [token] = useStorage('ACCESS_TOKEN');
 
   const auth = isAuth(token);
   return auth ? children : <Navigate to="/login" />;

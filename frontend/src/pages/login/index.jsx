@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../utils/axios';
 
 const initailStateValues = {
   email: '',
@@ -8,6 +9,7 @@ const initailStateValues = {
 };
 
 export default function Login() {
+  const navigate = useNavigate();
   const [values, setValues] = useState(initailStateValues);
 
   const handleChange = ({ value, name }) => {
@@ -17,8 +19,12 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    login(values).then(() => {
+      navigate('/');
+    });
   };
 
   return (
