@@ -1,5 +1,13 @@
 require('dotenv').config();
 
+console.log({
+  database: process.env.DATABASE,
+  dialect: 'mysql',
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD,
+  username: process.env.DB_USERNAME,
+})
+
 module.exports = {
   development: {
     database: process.env.DATABASE,

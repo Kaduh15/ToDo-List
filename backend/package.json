@@ -9,6 +9,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "rest": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

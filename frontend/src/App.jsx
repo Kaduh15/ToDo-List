@@ -1,13 +1,8 @@
 import React from 'react';
-
-console.log(process.env);
+import Rotas from './routes';
 
 function App() {
-  return (
-    <h1 className="App">
-      Hello Word
-    </h1>
-  );
+  return (<Rotas />);
 }
 
 export default App;
