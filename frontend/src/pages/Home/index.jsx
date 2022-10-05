@@ -10,13 +10,12 @@ export default function Home() {
   useDidMount(async () => {
     const result = await getUser(token);
     setUser(result);
-    console.log('aqui1', result);
   });
 
   return (
     <main>
       <header>
-        {user.name}
+        {JSON.stringify(user, null, 2)}
       </header>
     </main>
   );
