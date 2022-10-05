@@ -1,14 +1,34 @@
 import React from 'react';
+import {
+  BrowserRouter, Routes, Route, Navigate,
+} from 'react-router-dom';
+import useStorage from './utils/useStorage';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
+import { isAuth } from './utils/axios';
+
+function PrivateRoute({ children }) {
+  const [token] = useStorage('ACESS_TOKEN');
+
+  const auth = isAuth(token);
+  return auth ? children : <Navigate to="/login" />;
+}
 
 export default function Rotas() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="page2" element={<h1>page2</h1>} />
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <h1>Home</h1>
+              </PrivateRoute>
+          )}
+          />
+        </>
       </Routes>
     </BrowserRouter>
   );
