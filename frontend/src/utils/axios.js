@@ -30,7 +30,7 @@ export const login = ({ email, password }) => axios.post(
   },
 ).then((res) => {
   localStorage.setItem('ACCESS_TOKEN', res.data.token);
-  return true;
+  console.log('🚀 ~ file: axios.js ~ line 33 ~ ).then ~ res.data.token', res.data.token);
 })
   .catch(() => false);
 
