@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../utils/axios';
+import { register } from '../../utils/fetch';
 
 const initailStateValues = {
+  name: '',
   email: '',
   password: '',
 };
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState(initailStateValues);
 
@@ -22,16 +23,23 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    login(values).then(() => {
-      navigate('/');
+    register(values).then(() => {
+      navigate('/login');
     });
   };
 
   return (
     <main className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 p-10 bg-blue-600 rounded">
-        <h1 className="text-4xl font-semibold text-white">Login</h1>
+        <h1 className="text-4xl font-semibold text-white">Register</h1>
 
+        <input
+          type="text"
+          placeholder="Nome"
+          onChange={(e) => handleChange(e.target)}
+          value={values.name}
+          name="name"
+        />
         <input
           type="email"
           placeholder="Email"
@@ -51,10 +59,10 @@ export default function Login() {
           type="submit"
           className="bg-white rounded px-4 py-1"
         >
-          Login
+          Criar conta
         </button>
 
-        <Link to="/register" className="text-white text-sm">Cria uma conta</Link>
+        <Link to="/login" className="text-white text-sm">Já tenho uma conta</Link>
       </form>
     </main>
   );
