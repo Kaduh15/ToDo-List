@@ -29,7 +29,7 @@ export const login = ({ email, password }) => axios.post(
     headers: { 'Content-Type': 'application/json' },
   },
 ).then((res) => {
-  localStorage.setItem('ACESS_TOKEN', res.data.token);
+  localStorage.setItem('ACCESS_TOKEN', res.data.token);
   return true;
 })
   .catch(() => false);
