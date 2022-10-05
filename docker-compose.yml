@@ -8,7 +8,6 @@ services:
     stdin_open: true
     restart: always
     environment:
-      - REACT_APP_SECRET=qualquercoisa
       - ESLINT_NO_DEV_ERRORS=true
       - REACT_APP_URL_API=http://localhost:3001
     volumes:

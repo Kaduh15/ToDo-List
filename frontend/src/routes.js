@@ -5,11 +5,12 @@ import {
 import useStorage from './utils/useStorage';
 
 import Login from './pages/login';
+import Register from './pages/register';
 import { isAuth } from './utils/axios';
 
 function PrivateRoute({ children }) {
   const [token] = useStorage('ACCESS_TOKEN');
-  console.log(token);
+
   const auth = isAuth(token);
   return auth ? children : <Navigate to="/login" />;
 }
@@ -20,7 +21,7 @@ export default function Rotas() {
       <Routes>
         <>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<h1>Register</h1>} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/"
             element={(

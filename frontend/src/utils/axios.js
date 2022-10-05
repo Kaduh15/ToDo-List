@@ -30,8 +30,18 @@ export const login = ({ email, password }) => axios.post(
   },
 ).then((res) => {
   localStorage.setItem('ACCESS_TOKEN', res.data.token);
-  console.log('🚀 ~ file: axios.js ~ line 33 ~ ).then ~ res.data.token', res.data.token);
-})
-  .catch(() => false);
+});
+
+export const register = ({ email, password, name }) => axios.post(
+  `${process.env.REACT_APP_URL_API}/user`,
+  {
+    name,
+    email,
+    password,
+  },
+  {
+    headers: { 'Content-Type': 'application/json' },
+  },
+);
 
 export const getTasks = () => {};
