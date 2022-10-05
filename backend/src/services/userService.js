@@ -1,8 +1,9 @@
 const { User, Task } = require('../models');
 const { throwError } = require('../utils/mapError');
 
-const getAll = async () => {
-  const result = await User.findAll({ 
+const getUser = async (id) => {
+  const result = await User.findOne({
+    where: { id },
     include: [{
       model: Task,
       as: 'tasks',
@@ -43,7 +44,7 @@ const createUser = async (user) => {
 }
 
 module.exports = {
-  getAll,
+  getUser,
   getById,
   createUser,
 }
