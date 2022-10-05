@@ -4,8 +4,9 @@ import {
 } from 'react-router-dom';
 import useStorage from './utils/useStorage';
 
-import Login from './pages/login';
-import Register from './pages/register';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
 import { isAuth } from './utils/axios';
 
 function PrivateRoute({ children }) {
@@ -26,7 +27,7 @@ export default function Rotas() {
             path="/"
             element={(
               <PrivateRoute>
-                <h1>Home</h1>
+                <Home />
               </PrivateRoute>
           )}
           />

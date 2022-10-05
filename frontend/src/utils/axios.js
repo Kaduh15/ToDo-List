@@ -7,7 +7,7 @@ export const isAuth = (token) => {
   }
 
   return axios.get(axios.get(
-    `${process.env.REACT_APP_URL_API}/user`,
+    `${process.env.REACT_APP_URL_API}/auth`,
     {},
     {
       headers: {
@@ -44,4 +44,20 @@ export const register = ({ email, password, name }) => axios.post(
   },
 );
 
-export const getTasks = () => {};
+export const getUser = (token) => {
+  if (!token) {
+    return false;
+  }
+
+  return axios.get(axios.get(
+    `${process.env.REACT_APP_URL_API}/user`,
+    {},
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    },
+  )).then(() => true)
+    .catch(() => false);
+};
