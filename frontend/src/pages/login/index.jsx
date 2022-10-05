@@ -1,29 +1,24 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
+const initailStateValues = {
+  email: '',
+  password: '',
+};
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [values, setValues] = useState(initailStateValues);
 
-  const handleInput = (set, value) => {
-    set(value);
+  const handleChange = ({ value, name }) => {
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(
-      'http://localhost:3001/login',
-      {
-        email,
-        password,
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    ).then((res) => console.log(res))
-      .catch((err) => console.log(err));
   };
 
   return (
@@ -34,12 +29,16 @@ export default function Login() {
         <input
           type="email"
           placeholder="Email"
-          onChange={(e) => handleInput(setEmail, e.target.value)}
+          onChange={(e) => handleChange(e.target)}
+          value={values.email}
+          name="email"
         />
         <input
           type="password"
           placeholder="Senha"
-          onChange={(e) => handleInput(setPassword, e.target.value)}
+          onChange={(e) => handleChange(e.target)}
+          value={values.password}
+          name="password"
         />
 
         <button
