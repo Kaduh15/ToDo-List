@@ -6,17 +6,23 @@ export const isAuth = (token) => {
     return false;
   }
 
-  return axios.get(axios.get(
+  return axios.get(
     `${process.env.REACT_APP_URL_API}/auth`,
     {},
     {
       headers: {
         'Content-Type': 'application/json',
-        authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     },
-  )).then(() => true)
-    .catch(() => false);
+  ).then(() => {
+    console.log('Success');
+    return true;
+  })
+    .catch(() => {
+      console.log('Error');
+      return false;
+    });
 };
 
 export const login = ({ email, password }) => axios.post(
@@ -44,20 +50,16 @@ export const register = ({ email, password, name }) => axios.post(
   },
 );
 
-export const getUser = (token) => {
-  if (!token) {
-    return false;
-  }
-
-  return axios.get(axios.get(
+export const getUser = async (token) => {
+  const resutl = await axios.get(
     `${process.env.REACT_APP_URL_API}/user`,
     {},
     {
       headers: {
         'Content-Type': 'application/json',
-        authorization: token,
+        Authorization: token,
       },
     },
-  )).then(() => true)
-    .catch(() => false);
+  );
+  return resutl;
 };

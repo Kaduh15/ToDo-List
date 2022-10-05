@@ -10,7 +10,10 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3001', 'https://todo-list-kaduh15.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => res.status(200).json({ message: 'Olá Mundo!' }));

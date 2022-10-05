@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../utils/axios';
+import { login } from '../../utils/fetch';
 
 const initailStateValues = {
   email: '',

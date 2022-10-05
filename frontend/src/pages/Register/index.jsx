@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../../utils/axios';
+import { register } from '../../utils/fetch';
 
 const initailStateValues = {
   name: '',
