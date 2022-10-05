@@ -23,6 +23,7 @@ services:
     tty: true
     stdin_open: true
     restart: always
+    # command: npm prestart
     volumes:
       - ./backend:/app-back
     environment:

@@ -9,6 +9,7 @@ export default function Home() {
 
   useDidMount(async () => {
     const result = await getUser(token);
+    setUser(result);
     console.log('aqui1', result);
   });
 
