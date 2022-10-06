@@ -1,9 +1,12 @@
+const { StatusCodes } = require('http-status-codes');
+
 const userServeice = require('../services/userService')
 
-const getAll = async () => {
-  const result = await userServeice.getAll();
+const getUser = async (req, res) => {
+  const { id } = req.user;
+  const data = await userServeice.getUser(id);
 
-  return { type: 'ok', data: result };
+  res.status(StatusCodes.OK).json(data);
 }
 
 const getById = async (id) => {
@@ -19,7 +22,7 @@ const createUser = async (user) => {
 }
 
 module.exports = {
-  getAll,
+  getUser,
   getById,
   createUser,
 };

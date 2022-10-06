@@ -7,22 +7,24 @@ const { throwError } = require('../utils/mapError');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const { authorization } = req.headers;
+  const token = req.headers.authorization;
 
-  const ipClient = req.connection.remoteAddress
-    || req.socket.remoteAddress
-    || req.connection.socket.remoteAddress;
+  const ipClient =
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
 
-  if (!authorization) return res.status(StatusCodes.BAD_REQUEST).json({
-    message: 'Token not existing'
-  });
+  if (!token)
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'Token not existing',
+    });
 
-  const user = authTokenValidation(authorization);
-  
+  const user = authTokenValidation(token);
+
   if (user.ip === generateHash(ipClient))
     throwError({ message: 'Relogin', status: StatusCodes.UNAUTHORIZED });
 
   res.sendStatus(StatusCodes.OK);
-})
+});
 
 module.exports = router;

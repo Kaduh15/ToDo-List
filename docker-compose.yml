@@ -7,6 +7,9 @@ services:
     tty: true
     stdin_open: true
     restart: always
+    environment:
+      - ESLINT_NO_DEV_ERRORS=true
+      - REACT_APP_URL_API=http://localhost:3001
     volumes:
       - ./frontend:/app-front
     ports:
@@ -22,8 +25,14 @@ services:
     restart: always
     volumes:
       - ./backend:/app-back
-    env_file:
-      - ./.env
+    environment:
+      - DATABASE=todo_list
+      - DB_HOST=db
+      - DB_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - JWT_SECRET=senhasecreta
+      - PORT=3001
     ports:
       - 3001:3001
     depends_on:
@@ -40,7 +49,7 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - "3306:3306"
     healthcheck:
