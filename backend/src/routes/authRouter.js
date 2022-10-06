@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const token = req.headers.authorization;
-  console.log("🚀 ~ file: authRouter.js ~ line 11 ~ router.get ~ token", token)
-  console.log("🚀 ~ file: authRouter.js ~ line 11 ~ router.get ~ req.headers", req.headers)
 
   const ipClient =
     req.connection.remoteAddress ||
