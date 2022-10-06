@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
@@ -8,17 +8,16 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import { isAuth } from './utils/fetch';
-import useDidMount from './hooks/useDidMount';
 
 function PrivateRoute({ children }) {
   const [token] = useStorage('ACCESS_TOKEN');
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState();
 
-  useDidMount(async () => {
-    setAuth(await isAuth(token));
-  });
+  useEffect(() => {
+    isAuth(token).then((res) => setAuth(res));
+  }, []);
 
-  return auth ? children : <Navigate to="/login" />;
+  if (auth !== undefined) return auth ? children : <Navigate to="/login" />;
 }
 
 export default function Rotas() {
