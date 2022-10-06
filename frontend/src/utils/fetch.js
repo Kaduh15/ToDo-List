@@ -8,9 +8,9 @@ export const isAuth = (token) => fetch(`${process.env.REACT_APP_URL_API}/auth`, 
     Authorization: token,
   },
 })
-  .then(() => {
-    console.log('Success');
-    return true;
+  .then((res) => {
+    console.log('Success ', res);
+    return res.statusText;
   })
   .catch(() => {
     console.log('Error');
