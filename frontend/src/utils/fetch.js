@@ -1,12 +1,17 @@
 /* eslint-disable no-console */
 import axios from 'axios';
+import useStorage from './useStorage';
 
-export const isAuth = (token) => fetch(`${process.env.REACT_APP_URL_API}/auth`, {
+const [token] = useStorage('ACCESS_TOKEN');
+
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: token,
+};
+
+export const isAuth = () => fetch(`${process.env.REACT_APP_URL_API}/auth`, {
   method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: token,
-  },
+  headers,
 })
   .then((res) => {
     console.log('Success ', res);
@@ -44,13 +49,19 @@ export const register = ({ email, password, name }) => axios.post(
   },
 );
 
-export const getUser = async (token) => {
+export const getUser = async () => {
   const resutl = await fetch(`${process.env.REACT_APP_URL_API}/user`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
+    headers,
+  });
+
+  return resutl.json();
+};
+
+export const deleteTask = async (id) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}`, {
+    method: 'DELETE',
+    headers,
   });
 
   return resutl.json();
