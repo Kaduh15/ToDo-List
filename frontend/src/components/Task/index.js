@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FiTrash, FiCheckCircle } from 'react-icons/fi';
-import { deleteTask } from '../../utils/fetch';
+import { completedTask, deleteTask } from '../../utils/fetch';
 
 export default function Task({
   id, nameTask, description, status,
@@ -25,6 +25,7 @@ export default function Task({
           <FiCheckCircle
             size={30}
             className="cursor-pointer"
+            onClick={() => completedTask(id)}
           />
           )}
       </div>

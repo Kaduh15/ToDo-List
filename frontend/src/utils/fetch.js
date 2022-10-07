@@ -66,3 +66,12 @@ export const deleteTask = async (id) => {
 
   return resutl.json();
 };
+
+export const completedTask = async (id) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
+    method: 'PUT',
+    headers,
+  });
+
+  return resutl.json();
+};
