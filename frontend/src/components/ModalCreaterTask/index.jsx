@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../utils/fetch';
+import { createdTask } from '../../utils/fetch';
 
 const initailStateValues = {
   email: '',
@@ -22,15 +22,18 @@ export default function CreatedTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    login(values).then(() => {
+    createdTask(values).then(() => {
       navigate('/');
     });
   };
 
   return (
     <main className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 p-10 bg-blue-600 rounded">
-        <h1 className="text-4xl font-semibold text-white">Login</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4 p-10 bg-green-600 rounded"
+      >
+        <h1 className="text-4xl font-semibold text-white">Criar Tarefa</h1>
 
         <input
           type="text"
@@ -47,14 +50,13 @@ export default function CreatedTask() {
           name="description"
         />
 
-        <button
-          type="submit"
-          className="bg-white rounded px-4 py-1"
-        >
+        <button type="submit" className="bg-white rounded px-4 py-1">
           Criar tarefa
         </button>
 
-        <Link to="/" className="text-white text-sm">voltar para tarefa</Link>
+        <Link to="/" className="text-white text-sm">
+          voltar para tarefa
+        </Link>
       </form>
     </main>
   );

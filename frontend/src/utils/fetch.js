@@ -75,3 +75,14 @@ export const completedTask = async (id) => {
 
   return resutl.json();
 };
+
+export const createdTask = async ({ nameTask, description }) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task`, {
+    method: 'POST',
+    body: JSON.stringify({ nameTask, description }),
+    headers,
+  });
+  console.log('🚀 ~ file: fetch.js ~ line 85 ~ createdTask ~ resutl', resutl);
+
+  return resutl.json();
+};
