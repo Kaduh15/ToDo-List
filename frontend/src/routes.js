@@ -7,6 +7,7 @@ import useStorage from './utils/useStorage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import ModalCreatedTask from './components/ModalCreaterTask';
 import { isAuth } from './utils/fetch';
 
 function PrivateRoute({ children }) {
@@ -32,6 +33,14 @@ export default function Rotas() {
             element={(
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+          )}
+          />
+          <Route
+            path="/create-task"
+            element={(
+              <PrivateRoute>
+                <ModalCreatedTask />
               </PrivateRoute>
           )}
           />
