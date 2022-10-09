@@ -1,31 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { FiPlus } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 import Task from '../../components/Task';
-import { getUser } from '../../utils/fetch';
-import useStorage from '../../utils/useStorage';
-
-const initialStateUserTasks = {
-  id: 0,
-  name: '',
-  email: '',
-  tasks: [],
-};
+import useFetch from '../../hooks/useFecth';
 
 export default function Home() {
   const navigate = useNavigate();
-  const [token] = useStorage('ACCESS_TOKEN');
-  const [{ tasks }, setUser] = useState(initialStateUserTasks);
+  const { data } = useFetch('user');
 
-  useEffect(() => {
-    (async () => {
-      const result = await getUser(token);
-      setUser(result);
-    })();
-  }, []);
+  if (!data) return <h1>Carregando...</h1>;
+  const { tasks } = data;
 
   return (
     <main className="flex flex-col gap-6 p-2 justify-center items-center">
