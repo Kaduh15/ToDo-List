@@ -14,12 +14,12 @@ export default function useFetch(path, body) {
     }),
   };
 
-  const { data, error } = useSWR(`${process.env.REACT_APP_URL_API}/${path}`, async (url) => {
+  const { data, error, mutate } = useSWR(`${process.env.REACT_APP_URL_API}/${path}`, async (url) => {
     const response = await fetch(url, options);
     const dataFecth = await response.json();
 
     return dataFecth;
   });
 
-  return { data, error };
+  return { data, error, mutate };
 }

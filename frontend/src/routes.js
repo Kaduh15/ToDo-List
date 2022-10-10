@@ -18,7 +18,7 @@ function PrivateRoute({ children }) {
     isAuth(token).then((res) => setAuth(res));
   }, []);
 
-  if (auth !== undefined) return auth === 'OK' ? children : <Navigate to="/login" />;
+  if (auth !== undefined) return auth ? children : <Navigate to="/login" />;
 }
 
 export default function Rotas() {
