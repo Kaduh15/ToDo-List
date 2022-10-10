@@ -15,11 +15,7 @@ export const isAuth = () => fetch(`${process.env.REACT_APP_URL_API}/auth`, {
 })
   .then((res) => {
     console.log('Success ', res);
-    return res.statusText;
-  })
-  .catch(() => {
-    console.log('Error');
-    return false;
+    return res.ok;
   });
 
 export const login = ({ email, password }) => axios
@@ -34,7 +30,8 @@ export const login = ({ email, password }) => axios
     },
   )
   .then((res) => {
-    localStorage.setItem('ACCESS_TOKEN', res.data.token);
+    console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
+    localStorage.setItem('ACCESS_TOKEN', res?.data.token);
   });
 
 export const register = ({ email, password, name }) => axios.post(
@@ -47,7 +44,9 @@ export const register = ({ email, password, name }) => axios.post(
   {
     headers: { 'Content-Type': 'application/json' },
   },
-);
+).then((res) => {
+  localStorage.setItem('ACCESS_TOKEN', res?.data.token);
+});
 
 export const getUser = async () => {
   const resutl = await fetch(`${process.env.REACT_APP_URL_API}/user`, {
@@ -64,16 +63,16 @@ export const deleteTask = async (id) => {
     headers,
   });
 
-  return resutl.json();
+  return resutl;
 };
 
 export const completedTask = async (id) => {
-  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}/completed`, {
     method: 'PUT',
     headers,
   });
 
-  return resutl.json();
+  return resutl;
 };
 
 export const createdTask = async ({ nameTask, description }) => {
@@ -82,7 +81,8 @@ export const createdTask = async ({ nameTask, description }) => {
     body: JSON.stringify({ nameTask, description }),
     headers,
   });
-  console.log('🚀 ~ file: fetch.js ~ line 85 ~ createdTask ~ resutl', resutl);
 
-  return resutl.json();
+  const json = await resutl.json();
+
+  return json;
 };

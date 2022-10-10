@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import ModalCreatedTask from './components/ModalCreaterTask';
-import { isAuth } from './utils/fetch';
+import { isAuth } from './utils/api';
 
 function PrivateRoute({ children }) {
   const [token] = useStorage('ACCESS_TOKEN');
@@ -18,7 +18,7 @@ function PrivateRoute({ children }) {
     isAuth(token).then((res) => setAuth(res));
   }, []);
 
-  if (auth !== undefined) return auth === 'OK' ? children : <Navigate to="/login" />;
+  if (auth !== undefined) return auth ? children : <Navigate to="/login" />;
 }
 
 export default function Rotas() {

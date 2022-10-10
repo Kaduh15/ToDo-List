@@ -4,15 +4,7 @@ const { throwError } = require('../utils/mapError');
 
 const getAll = async (userId) => {
   const data = await Task.findAll({ 
-    where: userId && { userId },
-    include: [{
-      model: User,
-      as: 'user',
-      attributes: {
-        exclude: ['password', 'email']
-      },
-    }],
-    attributes: { exclude: ['userId'] }
+    where: { userId },
   });
 
   return data;
