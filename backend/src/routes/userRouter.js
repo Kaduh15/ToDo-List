@@ -6,11 +6,7 @@ const userCreateValidation = require('../middlewares/userCreateValidation');
 const { authAccess } = require('../middlewares/authMiddleware');
 const router = express.Router();
 
-router.post('/', userCreateValidation, async (req, res) => {
-  const {type, data} = await userController.createUser(req.body);
-
-  res.status(map(type)).json(data);
-})
+router.post('/', userCreateValidation, userController.createUser);
 
 router.use(authAccess);
 
