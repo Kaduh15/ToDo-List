@@ -1,5 +1,6 @@
 const { User, Task } = require('../models');
 const { throwError } = require('../utils/mapError');
+const { generateToken } = require('../utils/JWT');
 
 const getUser = async (id) => {
   const result = await User.findOne({
@@ -39,8 +40,10 @@ const getById = async (id) => {
 
 const createUser = async (user) => {
   const result = await User.create(user);
-
-  return result;
+  if (result.dataValues) {
+    const { password, ...newUser } = result.dataValues
+    return{ token: generateToken(newUser)};
+  }
 }
 
 module.exports = {
