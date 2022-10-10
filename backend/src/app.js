@@ -11,7 +11,11 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://todo-list-kaduh15.vercel.app'],
+  origin: [
+    'http://localhost:3000',
+    'https://todo-list-kaduh15.vercel.app',
+    'https://todo-list-git-development-kaduh15.vercel.app/'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials:true,
 }));
