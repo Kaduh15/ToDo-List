@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isAuth, register } from '../../utils/fetch';
+import { isAuth, register } from '../../utils/api';
 
 const initailStateValues = {
   name: '',

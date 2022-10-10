@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isAuth, login } from '../../utils/fetch';
+import { isAuth, login } from '../../utils/api';
 
 const initailStateValues = {
   email: '',

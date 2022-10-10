@@ -14,7 +14,7 @@ router.delete('/:id', taskController.deleteTask);
 
 router.get('/:id', taskController.getById);
 
-router.put('/completed/:id', taskController.completed);
+router.put('/:id/completed', taskController.completed);
 
 router.post('/', taskCreateValidation, taskController.create);
 

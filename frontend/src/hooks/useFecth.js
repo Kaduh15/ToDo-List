@@ -19,6 +19,10 @@ export default function useFetch(path, body) {
     const dataFecth = await response.json();
 
     return dataFecth;
+  }, {
+    revalidateOnFocus: true,
+    revalidateOnMount: true,
+    revalidateOnReconnect: true,
   });
 
   return { data, error, mutate };
