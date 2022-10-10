@@ -15,10 +15,10 @@ const getById = async (id) => {
   return { type: 'ok', data: result };
 }
 
-const createUser = async (user) => {
-  const result = await userServeice.createUser(user);
+const createUser = async (req, res) => {
+  const data = await userServeice.createUser(req.body);
 
-  return { type: 'created', data: result };
+  res.status(StatusCodes.CREATED).json(data);
 }
 
 module.exports = {
