@@ -15,7 +15,6 @@ const getById = async (req, res) => {
 
   res.status(StatusCodes.OK).json(data);
 }
-
 const completed = async (req, res) => {
   const { id: userId } = req.user;
   const { id: taskId } = req.params;

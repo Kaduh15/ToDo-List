@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import ModalCreatedTask from './components/ModalCreaterTask';
-import { isAuth } from './utils/api';
+import { isAuth } from './utils/fetch';
 
 function PrivateRoute({ children }) {
   const [token] = useStorage('ACCESS_TOKEN');

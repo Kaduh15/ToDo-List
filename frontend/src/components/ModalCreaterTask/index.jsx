@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createdTask } from '../../utils/api';
+import { createdTask } from '../../utils/fetch';
 
 const initailStateValues = {
   email: '',

@@ -63,16 +63,18 @@ export const deleteTask = async (id) => {
     headers,
   });
 
-  return resutl;
+  return resutl.json();
 };
 
 export const completedTask = async (id) => {
-  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}/completed`, {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
     method: 'PUT',
     headers,
   });
 
-  return resutl;
+  const json = await resutl.json();
+
+  return json;
 };
 
 export const createdTask = async ({ nameTask, description }) => {

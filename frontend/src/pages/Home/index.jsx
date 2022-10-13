@@ -9,40 +9,10 @@ import useFetch from '../../hooks/useFecth';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { data, error, mutate } = useFetch('task');
+  const { data } = useFetch('user');
 
-  const completedOneTask = (id) => {
-    const newArray = data.map((task) => {
-      if (task.id === id) {
-        return {
-          ...task,
-          status: 1,
-        };
-      }
-      return { ...task };
-    });
-
-    mutate(newArray, false);
-  };
-
-  const deleteOneTask = (id) => {
-    const newArray = data.filter((task) => task.id !== id);
-
-    mutate(newArray, false);
-  };
-
-  if (error) {
-    return (
-      <h1>
-        Algo deu errado:
-        {JSON.stringify(error)}
-      </h1>
-    );
-  }
-
-  if (!data) {
-    return <h1>Carregando...</h1>;
-  }
+  if (!data) return <h1>Carregando...</h1>;
+  const { tasks } = data;
 
   return (
     <main className="flex flex-col gap-6 p-2 justify-center items-center">
@@ -57,14 +27,8 @@ export default function Home() {
         <FiPlus color="white" size={30} />
       </button>
       <div className="flex flex-col gap-2">
-        {data?.map((task) => (
-          <Task
-            key={task.id}
-            {...task}
-            completedOneTask={completedOneTask}
-            deleteOneTask={deleteOneTask}
-          />
-        ))}
+        {tasks.length !== 0
+          && tasks.map((task) => <Task key={task.id} {...task} />)}
       </div>
     </main>
   );
