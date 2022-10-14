@@ -71,7 +71,7 @@ export const deleteTask = async (id) => {
 };
 
 export const completedTask = async (id) => {
-  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}/completed`, {
     method: 'PUT',
     headers,
   });
