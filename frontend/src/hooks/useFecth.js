@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import userStore from '../stores/userStore';
 
 export default function useFetch(path, body) {
-  const token = userStore((store) => store);
+  const token = userStore((store) => store.user.token);
   const options = {
     ...(body && { body }),
     ...(token && {

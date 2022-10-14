@@ -1,22 +1,25 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import userStore from '../stores/userStore';
 
-const { setToken, token } = userStore((store) => store);
+const token = localStorage.getItem('ACCESS_TOKEN') || '';
 
 const headers = {
   'Content-Type': 'application/json',
   Authorization: token,
 };
 
-export const isAuth = () => fetch(`${process.env.REACT_APP_URL_API}/auth`, {
-  method: 'GET',
-  headers,
-})
-  .then((res) => {
-    console.log('Success ', res);
-    return res.ok;
+export const isAuth = async (t) => {
+  if (!t && !token) return false;
+  const res = await fetch(`${process.env.REACT_APP_URL_API}/auth`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      Authorization: token || t,
+    },
   });
+  console.log('Success ', res);
+  return res.ok;
+};
 
 export const login = ({ email, password }) => axios
   .post(
@@ -30,8 +33,8 @@ export const login = ({ email, password }) => axios
     },
   )
   .then((res) => {
-    console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
-    setToken(res?.data.token);
+    if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+    return res;
   });
 
 export const register = ({ email, password, name }) => axios.post(
@@ -45,8 +48,8 @@ export const register = ({ email, password, name }) => axios.post(
     headers: { 'Content-Type': 'application/json' },
   },
 ).then((res) => {
-  console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
-  setToken(res?.data.token);
+  if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+  return res;
 });
 
 export const getUser = async () => {

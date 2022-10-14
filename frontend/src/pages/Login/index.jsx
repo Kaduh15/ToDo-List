@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../utils/fetch';
+import userStore from '../../stores/userStore';
+import { isAuth, login } from '../../utils/fetch';
 
 const initailStateValues = {
   email: '',
@@ -9,6 +10,10 @@ const initailStateValues = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const { token, setToken } = userStore((store) => ({
+    token: store.user.token,
+    setToken: store.setToken,
+  }));
   const [values, setValues] = useState(initailStateValues);
 
   const handleChange = ({ value, name }) => {
@@ -21,10 +26,17 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    login(values).then(() => {
+    login(values).then((res) => {
+      setToken(res?.data.token);
       navigate('/');
     });
   };
+
+  useEffect(() => {
+    isAuth(token).then((res) => {
+      if (res) navigate('/');
+    });
+  }, []);
 
   return (
     <main className="flex justify-center items-center h-screen">

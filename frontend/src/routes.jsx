@@ -8,12 +8,14 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import ModalCreatedTask from './components/ModalCreaterTask';
 import { isAuth } from './utils/fetch';
+import userStore from './stores/userStore';
 
 function PrivateRoute({ children }) {
   const [auth, setAuth] = useState();
+  const { user: { token } } = userStore((store) => store);
 
   useEffect(() => {
-    isAuth().then((res) => setAuth(res));
+    isAuth(token).then((res) => setAuth(res));
   }, []);
 
   if (auth !== undefined) return auth ? children : <Navigate to="/login" />;
