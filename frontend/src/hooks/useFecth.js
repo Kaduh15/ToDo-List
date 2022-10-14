@@ -1,9 +1,8 @@
 import useSWR from 'swr';
-
-import useStorage from '../utils/useStorage';
+import userStore from '../stores/userStore';
 
 export default function useFetch(path, body) {
-  const [token] = useStorage('ACCESS_TOKEN');
+  const { token } = userStore((store) => store);
   const options = {
     ...(body && { body }),
     ...(token && {

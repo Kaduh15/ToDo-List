@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import useStorage from './useStorage';
+import userStore from '../stores/userStore';
 
-const [token] = useStorage('ACCESS_TOKEN');
+const { setToken, token } = userStore((store) => store);
 
 const headers = {
   'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const login = ({ email, password }) => axios
   )
   .then((res) => {
     console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
-    localStorage.setItem('ACCESS_TOKEN', res?.data.token);
+    setToken(res?.data.token);
   });
 
 export const register = ({ email, password, name }) => axios.post(
@@ -45,7 +45,8 @@ export const register = ({ email, password, name }) => axios.post(
     headers: { 'Content-Type': 'application/json' },
   },
 ).then((res) => {
-  localStorage.setItem('ACCESS_TOKEN', res?.data.token);
+  console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
+  setToken(res?.data.token);
 });
 
 export const getUser = async () => {

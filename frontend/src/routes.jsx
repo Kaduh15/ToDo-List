@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import useStorage from './utils/useStorage';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,11 +10,10 @@ import ModalCreatedTask from './components/ModalCreaterTask';
 import { isAuth } from './utils/fetch';
 
 function PrivateRoute({ children }) {
-  const [token] = useStorage('ACCESS_TOKEN');
   const [auth, setAuth] = useState();
 
   useEffect(() => {
-    isAuth(token).then((res) => setAuth(res));
+    isAuth().then((res) => setAuth(res));
   }, []);
 
   if (auth !== undefined) return auth ? children : <Navigate to="/login" />;

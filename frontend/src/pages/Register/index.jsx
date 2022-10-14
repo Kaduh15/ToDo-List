@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isAuth, register } from '../../utils/fetch';
+import { register } from '../../utils/fetch';
 
 const initailStateValues = {
   name: '',
@@ -12,7 +12,6 @@ const initailStateValues = {
 export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState(initailStateValues);
-  const mount = useRef(null);
 
   const handleChange = ({ value, name }) => {
     setValues((prev) => ({
@@ -28,16 +27,6 @@ export default function Register() {
       navigate('/login');
     });
   };
-
-  useEffect(() => {
-    if (!mount.current) {
-      isAuth().then((res) => {
-        if (res) navigate('/');
-      });
-
-      mount.current = true;
-    }
-  }, []);
 
   return (
     <main className="flex justify-center items-center h-screen">
