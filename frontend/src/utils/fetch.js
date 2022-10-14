@@ -1,42 +1,41 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
-export const isAuth = (token) => {
-  if (!token) {
-    return false;
-  }
+const token = localStorage.getItem('ACCESS_TOKEN') || '';
 
-  return axios.get(
-    `${process.env.REACT_APP_URL_API}/auth`,
-    {},
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  ).then(() => {
-    console.log('Success');
-    return true;
-  })
-    .catch(() => {
-      console.log('Error');
-      return false;
-    });
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: token,
 };
 
-export const login = ({ email, password }) => axios.post(
-  `${process.env.REACT_APP_URL_API}/login`,
-  {
-    email,
-    password,
-  },
-  {
-    headers: { 'Content-Type': 'application/json' },
-  },
-).then((res) => {
-  localStorage.setItem('ACCESS_TOKEN', res.data.token);
-});
+export const isAuth = async (t) => {
+  if (!t && !token) return false;
+  const res = await fetch(`${process.env.REACT_APP_URL_API}/auth`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      Authorization: token || t,
+    },
+  });
+  console.log('Success ', res);
+  return res.ok;
+};
+
+export const login = ({ email, password }) => axios
+  .post(
+    `${process.env.REACT_APP_URL_API}/login`,
+    {
+      email,
+      password,
+    },
+    {
+      headers: { 'Content-Type': 'application/json' },
+    },
+  )
+  .then((res) => {
+    if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+    return res;
+  });
 
 export const register = ({ email, password, name }) => axios.post(
   `${process.env.REACT_APP_URL_API}/user`,
@@ -48,18 +47,48 @@ export const register = ({ email, password, name }) => axios.post(
   {
     headers: { 'Content-Type': 'application/json' },
   },
-);
+).then((res) => {
+  if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+  return res;
+});
 
-export const getUser = async (token) => {
-  const resutl = await axios.get(
-    `${process.env.REACT_APP_URL_API}/user`,
-    {},
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token,
-      },
-    },
-  );
-  return resutl;
+export const getUser = async () => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/user`, {
+    method: 'GET',
+    headers,
+  });
+
+  return resutl.json();
+};
+
+export const deleteTask = async (id) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}`, {
+    method: 'DELETE',
+    headers,
+  });
+
+  return resutl.json();
+};
+
+export const completedTask = async (id) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
+    method: 'PUT',
+    headers,
+  });
+
+  const json = await resutl.json();
+
+  return json;
+};
+
+export const createdTask = async ({ nameTask, description }) => {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task`, {
+    method: 'POST',
+    body: JSON.stringify({ nameTask, description }),
+    headers,
+  });
+
+  const json = await resutl.json();
+
+  return json;
 };

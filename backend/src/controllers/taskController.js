@@ -15,6 +15,13 @@ const getById = async (req, res) => {
 
   res.status(StatusCodes.OK).json(data);
 }
+const completed = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id: taskId } = req.params;
+  await taskService.completed(taskId, userId);
+
+  res.sendStatus(StatusCodes.NO_CONTENT);
+}
 
 const create = async (req, res) => {
   const { id } = req.user;
@@ -37,4 +44,5 @@ module.exports = {
   getById,
   create,
   deleteTask,
+  completed,
 }

@@ -12,10 +12,10 @@ const generateToken = (payload) =>
 
 const authTokenValidation = async (token) => {
   if (!token) {
-      const e = new Error('Token not found');
-      e.status = 401;
-      throw e;
-    }
+    const e = new Error('Token not found');
+    e.status = 401;
+    throw e;
+  }
 
   try {
     const instrospection = jwt.verify(token, TOKEN_SECRET);
@@ -23,7 +23,7 @@ const authTokenValidation = async (token) => {
   } catch (e) {
     console.log('Err', e);
     const err = new Error('Expired or invalid token');
-    err.status = 401;
+    err.status = 400;
     throw err;
   }
 };

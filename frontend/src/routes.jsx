@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import useStorage from './utils/useStorage';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import ModalCreatedTask from './components/ModalCreaterTask';
 import { isAuth } from './utils/fetch';
-import useDidMount from './hooks/useDidMount';
+import userStore from './stores/userStore';
 
 function PrivateRoute({ children }) {
-  const [token] = useStorage('ACCESS_TOKEN');
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState();
+  const { user: { token } } = userStore((store) => store);
 
-  useDidMount(async () => {
-    setAuth(await isAuth(token));
-  });
+  useEffect(() => {
+    isAuth(token).then((res) => setAuth(res));
+  }, []);
 
-  return auth ? children : <Navigate to="/login" />;
+  if (auth !== undefined) return auth ? children : <Navigate to="/login" />;
 }
 
 export default function Rotas() {
@@ -33,6 +33,14 @@ export default function Rotas() {
             element={(
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+          )}
+          />
+          <Route
+            path="/create-task"
+            element={(
+              <PrivateRoute>
+                <ModalCreatedTask />
               </PrivateRoute>
           )}
           />

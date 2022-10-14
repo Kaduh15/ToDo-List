@@ -33,6 +33,18 @@ const getById = async (taskId, userId) => {
 
   throwError({message: 'Task not found', status: StatusCodes.NOT_FOUND});
 };
+const completed = async (taskId, userId) => {
+  const [row] = await Task.update({
+    status: 1
+  },{
+    where: { id: taskId, userId }
+  }
+  );
+
+  if (row === 1) return;
+
+  throwError({message: 'Task not found', status: StatusCodes.NOT_FOUND});
+};
 
 const create = async (id, task) => {
   const user = await User.findByPk(id);
@@ -59,4 +71,5 @@ module.exports = {
   getById,
   create,
   deleteTask,
+  completed,
 }

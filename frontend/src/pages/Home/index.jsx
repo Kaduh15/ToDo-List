@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import useDidMount from '../../hooks/useDidMount';
-import { getUser } from '../../utils/fetch';
-import useStorage from '../../utils/useStorage';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+
+import { FiPlus } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+
+import Task from '../../components/Task';
+import useFetch from '../../hooks/useFecth';
 
 export default function Home() {
-  const [token] = useStorage('ACCESS_TOKEN');
-  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+  const { data } = useFetch('user');
 
-  useDidMount(async () => {
-    const result = await getUser(token);
-    setUser(result);
-  });
+  if (!data) return <h1>Carregando...</h1>;
+  const { tasks } = data;
 
   return (
-    <main>
-      <header>
-        {JSON.stringify(user, null, 2)}
-      </header>
+    <main className="flex flex-col gap-6 p-2 justify-center items-center">
+      <button
+        type="button"
+        className="flex gap-4 justify-center m-2 items-center text-white bg-green-800 p-4"
+        onClick={
+          () => navigate('/create-task')
+        }
+      >
+        Criar nova tarefa
+        <FiPlus color="white" size={30} />
+      </button>
+      <div className="flex flex-col gap-2">
+        {tasks.length !== 0
+          && tasks.map((task) => <Task key={task.id} {...task} />)}
+      </div>
     </main>
   );
 }
