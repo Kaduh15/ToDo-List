@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isAuth, register } from '../../utils/api';
+import userStore from '../../stores/userStore';
+import { isAuth, register } from '../../utils/fetch';
 
 const initailStateValues = {
   name: '',
@@ -11,8 +12,11 @@ const initailStateValues = {
 
 export default function Register() {
   const navigate = useNavigate();
+  const { token, setToken } = userStore((store) => ({
+    token: store.user.token,
+    setToken: store.setToken,
+  }));
   const [values, setValues] = useState(initailStateValues);
-  const mount = useRef(null);
 
   const handleChange = ({ value, name }) => {
     setValues((prev) => ({
@@ -24,19 +28,16 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    register(values).then(() => {
-      navigate('/login');
+    register(values).then((res) => {
+      setToken(res?.data.token);
+      navigate('/');
     });
   };
 
   useEffect(() => {
-    if (!mount.current) {
-      isAuth().then((res) => {
-        if (res) navigate('/');
-      });
-
-      mount.current = true;
-    }
+    isAuth(token).then((res) => {
+      if (res) navigate('/');
+    });
   }, []);
 
   return (

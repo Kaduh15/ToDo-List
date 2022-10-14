@@ -1,9 +1,8 @@
 import useSWR from 'swr';
-
-import useStorage from '../utils/useStorage';
+import userStore from '../stores/userStore';
 
 export default function useFetch(path, body) {
-  const [token] = useStorage('ACCESS_TOKEN');
+  const token = userStore((store) => store.user.token);
   const options = {
     ...(body && { body }),
     ...(token && {
@@ -19,10 +18,6 @@ export default function useFetch(path, body) {
     const dataFecth = await response.json();
 
     return dataFecth;
-  }, {
-    revalidateOnFocus: true,
-    revalidateOnMount: true,
-    revalidateOnReconnect: true,
   });
 
   return { data, error, mutate };

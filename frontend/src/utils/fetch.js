@@ -1,22 +1,25 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import useStorage from './useStorage';
 
-const [token] = useStorage('ACCESS_TOKEN');
+const token = localStorage.getItem('ACCESS_TOKEN') || '';
 
 const headers = {
   'Content-Type': 'application/json',
   Authorization: token,
 };
 
-export const isAuth = () => fetch(`${process.env.REACT_APP_URL_API}/auth`, {
-  method: 'GET',
-  headers,
-})
-  .then((res) => {
-    console.log('Success ', res);
-    return res.ok;
+export const isAuth = async (t) => {
+  if (!t && !token) return false;
+  const res = await fetch(`${process.env.REACT_APP_URL_API}/auth`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      Authorization: token || t,
+    },
   });
+  console.log('Success ', res);
+  return res.ok;
+};
 
 export const login = ({ email, password }) => axios
   .post(
@@ -30,8 +33,8 @@ export const login = ({ email, password }) => axios
     },
   )
   .then((res) => {
-    console.log('🚀 ~ file: fetch.js ~ line 39 ~ .then ~ res', res);
-    localStorage.setItem('ACCESS_TOKEN', res?.data.token);
+    if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+    return res;
   });
 
 export const register = ({ email, password, name }) => axios.post(
@@ -45,7 +48,8 @@ export const register = ({ email, password, name }) => axios.post(
     headers: { 'Content-Type': 'application/json' },
   },
 ).then((res) => {
-  localStorage.setItem('ACCESS_TOKEN', res?.data.token);
+  if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
+  return res;
 });
 
 export const getUser = async () => {
@@ -63,16 +67,18 @@ export const deleteTask = async (id) => {
     headers,
   });
 
-  return resutl;
+  return resutl.json();
 };
 
 export const completedTask = async (id) => {
-  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/${id}/completed`, {
+  const resutl = await fetch(`${process.env.REACT_APP_URL_API}/task/completed/${id}`, {
     method: 'PUT',
     headers,
   });
 
-  return resutl;
+  const json = await resutl.json();
+
+  return json;
 };
 
 export const createdTask = async ({ nameTask, description }) => {

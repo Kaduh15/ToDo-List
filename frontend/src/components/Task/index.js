@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { FiTrash, FiCheckCircle } from 'react-icons/fi';
-import { completedTask, deleteTask } from '../../utils/api';
+import { completedTask, deleteTask } from '../../utils/fetch';
 
 export default function Task({
   id, nameTask, description, status,
-  deleteOneTask, completedOneTask,
 }) {
   return (
     <div className={`flex justify-between text-white px-8 items-center ${status ? 'bg-green-600' : 'bg-blue-600'}  gap-4 h-16 rounded`}>
@@ -19,20 +18,14 @@ export default function Task({
         <FiTrash
           size={30}
           className="cursor-pointer"
-          onClick={() => {
-            deleteTask(id);
-            deleteOneTask(id);
-          }}
+          onClick={() => deleteTask(id)}
         />
         {!status
           && (
           <FiCheckCircle
             size={30}
             className="cursor-pointer"
-            onClick={() => {
-              completedTask(id);
-              completedOneTask(id);
-            }}
+            onClick={() => completedTask(id)}
           />
           )}
       </div>
