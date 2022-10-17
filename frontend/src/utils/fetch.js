@@ -34,8 +34,8 @@ export const login = ({ email, password }) => axios
   )
   .then((res) => {
     if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
-    return res;
-  });
+    return res?.data;
+  }).catch(({ response }) => response.data);
 
 export const register = ({ email, password, name }) => axios.post(
   `${process.env.REACT_APP_URL_API}/user`,
@@ -49,8 +49,8 @@ export const register = ({ email, password, name }) => axios.post(
   },
 ).then((res) => {
   if (res?.data?.token) localStorage.setItem('ACCESS_TOKEN', res?.data.token || '');
-  return res;
-});
+  return res?.data;
+}).catch(({ response }) => response.data);
 
 export const getUser = async () => {
   const resutl = await fetch(`${process.env.REACT_APP_URL_API}/user`, {
