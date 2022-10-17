@@ -17,6 +17,7 @@ export default function Register() {
     setToken: store.setToken,
   }));
   const [values, setValues] = useState(initailStateValues);
+  const [error, setError] = useState('');
 
   const handleChange = ({ value, name }) => {
     setValues((prev) => ({
@@ -29,8 +30,11 @@ export default function Register() {
     e.preventDefault();
 
     register(values).then((res) => {
-      setToken(res?.data.token);
-      navigate('/');
+      if (res.message) {
+        return setError(res.message);
+      }
+      setToken(res?.token);
+      return navigate('/');
     });
   };
 
@@ -73,6 +77,8 @@ export default function Register() {
         >
           Criar conta
         </button>
+
+        {error && <p className="text-sm text-white bg-red-700 p-1 rounded">{error}</p>}
 
         <Link to="/login" className="text-white text-sm">Já tenho uma conta</Link>
       </form>

@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createdTask } from '../../utils/fetch';
 
 const initailStateValues = {
-  email: '',
-  password: '',
+  nameTask: '',
+  description: '',
 };
 
 export default function CreatedTask() {
   const navigate = useNavigate();
   const [values, setValues] = useState(initailStateValues);
+  const [disableButton, setDisableButton] = useState(true);
 
   const handleChange = ({ value, name }) => {
     setValues((prev) => ({
@@ -18,6 +19,17 @@ export default function CreatedTask() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (
+      (values.description.length < 15 && values.description.length > 0)
+      || values.nameTask.length < 5
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [values]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +62,11 @@ export default function CreatedTask() {
           name="description"
         />
 
-        <button type="submit" className="bg-white rounded px-4 py-1">
+        <button
+          type="submit"
+          className="bg-white rounded px-4 py-1 disabled:bg-slate-500 disabled:text-slate-300"
+          disabled={disableButton}
+        >
           Criar tarefa
         </button>
 
