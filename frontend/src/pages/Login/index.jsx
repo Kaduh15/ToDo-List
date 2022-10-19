@@ -15,6 +15,7 @@ export default function Login() {
     setToken: store.setToken,
   }));
   const [values, setValues] = useState(initailStateValues);
+  const [error, setError] = useState('');
 
   const handleChange = ({ value, name }) => {
     setValues((prev) => ({
@@ -27,8 +28,11 @@ export default function Login() {
     e.preventDefault();
 
     login(values).then((res) => {
-      setToken(res?.data.token);
-      navigate('/');
+      if (res.message) {
+        return setError(res.message);
+      }
+      setToken(res?.token);
+      return navigate('/');
     });
   };
 
@@ -64,6 +68,8 @@ export default function Login() {
         >
           Login
         </button>
+
+        {error && <p className="text-sm text-white bg-red-700 p-1 rounded">{error}</p>}
 
         <Link to="/register" className="text-white text-sm">Cria uma conta</Link>
       </form>
