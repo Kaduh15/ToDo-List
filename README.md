@@ -46,21 +46,20 @@
 
 ## :dart: About ##
 
-Describe your project
+A project of a task list with login system for each user.
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
+- [Express](https://expressjs.com/)
 - [Node.js](https://nodejs.org/en/)
 - [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [Docker](https://www.docker.com/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [Node](https://nodejs.org/en/) end [docker](https://www.docker.com/) installed.
 
 ## :checkered_flag: Starting ##
 
@@ -69,7 +68,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 $ git clone https://github.com/Kaduh15/ToDo-List.git
 
 # Access
-$ cd todo-list
+$ cd ToDo-List
 
 # Install dependencies
 $ npm run depend
@@ -77,7 +76,12 @@ $ npm run depend
 # Run the project
 $ npm start
 
-# The server will initialize in the <http://localhost:3000>
+#Run database* 
+$ docker exec -it backend sh
+$ npm run prestart 
+
+# The server will initialize in the (Front-End)<http://localhost:3000>
+# The server will initialize in the (Back-End)<http://localhost:3001>
 ```
 
 ## :memo: License ##
