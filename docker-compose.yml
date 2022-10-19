@@ -33,6 +33,7 @@ services:
       - DB_USERNAME=root
       - JWT_SECRET=senhasecreta
       - PORT=3001
+      - NODE_ENV=development
     ports:
       - 3001:3001
     depends_on:
