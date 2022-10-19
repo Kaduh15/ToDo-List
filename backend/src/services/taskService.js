@@ -48,6 +48,7 @@ const completed = async (taskId, userId) => {
 
 const create = async (id, task) => {
   const user = await User.findByPk(id);
+  console.log("🚀 ~ file: taskService.js ~ line 51 ~ create ~ user", user)
 
   if (!user) return throwError({message: 'User not found', status: StatusCodes.NOT_FOUND });
 

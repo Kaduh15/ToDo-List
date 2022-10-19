@@ -87,6 +87,7 @@ export const createdTask = async ({ nameTask, description }) => {
     body: JSON.stringify({ nameTask, description }),
     headers,
   });
+  console.log('🚀 ~ file: fetch.js ~ line 90 ~ createdTask ~ resutl', resutl);
 
   const json = await resutl.json();
 
