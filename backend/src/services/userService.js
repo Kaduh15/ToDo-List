@@ -40,7 +40,7 @@ const getById = async (id) => {
 }
 
 const createUser = async (user) => {
-  const hasEmail = await User.findOne({email: user.email});
+  const hasEmail = await User.findOne({where: {email: user.email}});
   if (hasEmail) return throwError({message: 'E-mail already registered', status: StatusCodes.CONFLICT});
 
   const result = await User.create(user);
